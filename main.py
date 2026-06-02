@@ -9,7 +9,7 @@ logger = logging.getLogger("sa-ivr")
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
-AUDIO_URL = "https://secret-alchemist-ivr-production.up.railway.app/static/greetings.mp3"
+AUDIO_URL = "https://secret-alchemist-ivr-production.up.railway.app/static/greetings_converted.mp3"
 
 @app.api_route("/answer", methods=["GET", "POST"])
 async def answer(request: Request):
@@ -19,7 +19,6 @@ async def answer(request: Request):
     <Play>{AUDIO_URL}</Play>
     <Hangup/>
 </Response>"""
-    logger.info(f"Returning XML with audio: {AUDIO_URL}")
     return Response(content=xml, media_type="application/xml")
 
 @app.api_route("/hangup", methods=["GET", "POST"])
