@@ -9,8 +9,7 @@ logger = logging.getLogger("sa-ivr")
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
-AUDIO_URL = "https://secret-alchemist-ivr-production.up.railway.app/static/greetings_converted.mp3"
-
+AUDIO_URL = "https://secret-alchemist-ivr-production.up.railway.app/static/greeting_final.mp3"
 @app.api_route("/answer", methods=["GET", "POST"])
 async def answer(request: Request):
     logger.info("CALL RECEIVED")
