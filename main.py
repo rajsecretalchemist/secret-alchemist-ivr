@@ -39,8 +39,7 @@ async def answer(request: Request):
     # Build the public URL for the audio file.
     # Vobiz fetches this URL directly, so it must be reachable from the internet.
     base_url = str(request.base_url).rstrip("/")
-    audio_url = "https://filebin.net/urdwrbinx6sfd52d/greetings.mp3"
-
+    audio_url = f"{base_url}/static/greetings.mp3"
     xml = f"""<?xml version="1.0" encoding="UTF-8"?>
 <Response>
     <Play>{audio_url}</Play>
