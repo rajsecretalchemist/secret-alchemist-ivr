@@ -1,24 +1,17 @@
 import logging
 from fastapi import FastAPI, Request
-from fastapi.responses import Response
-from fastapi.staticfiles import StaticFiles
+from fastapi.responses import HTMLResponse, Response
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("sa-ivr")
 
 app = FastAPI()
-app.mount("/static", StaticFiles(directory="static"), name="static")
 
-AUDIO_URL = "https://secret-alchemist-ivr-production.up.railway.app/static/greeting_final.mp3"
 @app.api_route("/answer", methods=["GET", "POST"])
 async def answer(request: Request):
-    logger.info("CALL RECEIVED")
-    xml = f"""<?xml version="1.0" encoding="UTF-8"?>
-<Response>
-    <Play>{AUDIO_URL}</Play>
-    <Hangup/>
-</Response>"""
-    return Response(content=xml, media_type="application/xml")
+    logger.info("INBOUND CALL RECEIVED")
+    xml = '<?xml version="1.0" encoding="UTF-8"?><Response><Speak voice="WOMAN" language="en-IN">Thank you for calling Secret Alchemist! For order-related or general queries, please email us at care at secret alchemist dot com. I Repeat C, A, R, E at Secret Alchemist dot com. You can also reach us on 77188 21521. Our team is available Monday to Friday, 10 AM to 6 PM. We look forward to hearing from you.</Speak><Hangup/></Response>'
+    return HTMLResponse(content=xml, media_type="application/xml")
 
 @app.api_route("/hangup", methods=["GET", "POST"])
 async def hangup(request: Request):
